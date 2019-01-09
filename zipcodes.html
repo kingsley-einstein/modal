@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Deliver to where?</title>
+    </head>
+    <body style="margin: 0; padding: 0;">
+        <div style="width: 40%; height: 40%; position: fixed; background: white; top: -345px; left: 245px; transition: all 500ms cubic-bezier(0.25, 0.5, 0.75, 1); text-align: center; z-index: 9999;" id="modal">
+            <div style="margin-left: 9px; float: right;">
+                <button style="background: transparent; border: none; font-size: 18px;" onclick="hideModal()">
+                    &times;
+                </button>
+            </div>
+            <div style="margin-top: 16px;">
+                Where do you want the flowers?
+            </div>
+            <div style="margin-top: 8px; padding: 8px;">
+                <form id="modForm">
+                    <input type="text" placeholder="Zip Code" id="field">
+                    <button type="submit" style="background: teal; border: none; height: 30px; margin-left: 8px;">
+                        Submit
+                    </button>
+                </form>
+                <div id="message" style="color: red; margin-top: 8px;"></div>
+            </div>
+        </div>
+        <div id="main" style="background: whitesmoke; height: 100vh; width: 100vw;">
+            <!-- Click button to show modal -->
+
+            <button onclick="showModal()">Show modal</button>
+        </div>
+        <script>
+            const allowedZips = ['88891', '22222', '45457', '78789'];
+            
+            /*
+            * This function displays the modal
+            * 
+            */
+            function showModal() {
+                document
+                .getElementById('modal')
+                .style
+                .top = '125px';
+
+                document
+                .getElementById('main')
+                .style
+                .filter = 'blur(8px)';
+            }
+
+            function hideModal() {
+                document
+                .getElementById('modal')
+                .style
+                .top = '-345px';
+
+                document
+                .getElementById('main')
+                .style
+                .filter = 'none';
+
+                document.getElementById('message').innerText = '';
+                document.getElementById('field').value = '';
+            }
+
+            function checkZip() {
+                
+                if (allowedZips.indexOf(document.getElementById('field').value) === -1) {
+                    document.getElementById('message').innerText = 'We do not deliver at that location';
+                }
+                else {
+                    location.replace("www.google.com");
+                }
+            }
+
+            document
+            .getElementById('modForm')
+            .addEventListener('submit', event => {
+                event.preventDefault();
+                checkZip();
+            });
+
+            window.addEventListener('load', (event) => showModal());
+        </script>
+    </body>
+</html>
